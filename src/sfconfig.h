@@ -41,6 +41,10 @@
 #define HAVE_ALSA_ASOUNDLIB_H 0
 #endif
 
+#ifndef HAVE_SNDIO_H
+#define HAVE_SNDIO_H 0
+#endif
+
 #ifndef HAVE_BYTESWAP_H
 #define HAVE_BYTESWAP_H 0
 #endif
@@ -113,10 +117,10 @@
 #define HAVE_X86INTRIN_H 0
 #endif
 
-#if defined __x86_64__
+#if (defined __x86_64__) || (defined _M_X64)
 #define CPU_IS_X86_64	1	/* Define both for x86_64 */
 #define CPU_IS_X86		1
-#elif defined (__i486__) || defined (__i586__) || defined (__i686__)
+#elif defined (__i486__) || defined (__i586__) || defined (__i686__) || defined (_M_IX86)
 #define CPU_IS_X86 		1
 #define CPU_IS_X86_64 	0
 #else
@@ -124,12 +128,8 @@
 #define CPU_IS_X86_64	0
 #endif
 
-#ifndef HAVE_SSIZE_T
-#define HAVE_SSIZE_T 0
-#endif
-
-#if (HAVE_SSIZE_T == 0)
-#define ssize_t intptr_t
+#if (defined (__SSE2__) || defined (_M_AMD64) || (defined (_M_IX86_FP) && (_M_IX86_FP >= 2)) && HAVE_IMMINTRIN_H)
+#define USE_SSE2
 #endif
 
 #endif

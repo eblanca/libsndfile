@@ -104,7 +104,7 @@ mat4_open	(SF_PRIVATE *psf)
 
 	psf->container_close = mat4_close ;
 
-	psf->blockwidth = psf->bytewidth * psf->sf.channels ;
+	psf->blockwidth = (sf_count_t) psf->bytewidth * psf->sf.channels ;
 
 	switch (subformat)
 	{	case SF_FORMAT_PCM_16 :
@@ -248,7 +248,7 @@ mat4_read_header (SF_PRIVATE *psf)
 	if ((rows != 1) || (cols != 1))
 		return SFE_MAT4_NO_SAMPLERATE ;
 
-	psf->sf.samplerate = lrint (value) ;
+	psf->sf.samplerate = psf_lrint (value) ;
 
 	/* Now write out the audio data. */
 
@@ -320,7 +320,7 @@ mat4_read_header (SF_PRIVATE *psf)
 				psf->filelength - psf->dataoffset, psf->sf.channels * psf->sf.frames * psf->bytewidth) ;
 		}
 	else if ((psf->filelength - psf->dataoffset) > psf->sf.channels * psf->sf.frames * psf->bytewidth)
-		psf->dataend = psf->dataoffset + rows * cols * psf->bytewidth ;
+		psf->dataend = psf->dataoffset + (sf_count_t) rows * (sf_count_t) cols * psf->bytewidth ;
 
 	psf->datalength = psf->filelength - psf->dataoffset - psf->dataend ;
 

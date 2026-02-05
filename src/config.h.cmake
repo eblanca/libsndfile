@@ -1,12 +1,6 @@
 /* Set to 1 if the compile is GNU GCC. */
 #cmakedefine01 COMPILER_IS_GCC
 
-/* Target processor clips on negative float to int conversion. */
-#cmakedefine01 CPU_CLIPS_NEGATIVE
-
-/* Target processor clips on positive float to int conversion. */
-#cmakedefine01 CPU_CLIPS_POSITIVE
-
 /* Target processor is big endian. */
 #cmakedefine01 CPU_IS_BIG_ENDIAN
 
@@ -42,6 +36,9 @@
 
 /* Will be set to 1 if flac, ogg and vorbis are available. */
 #cmakedefine01 HAVE_EXTERNAL_XIPH_LIBS
+
+/* Will be set to 1 if lame and mpg123 are available. */
+#cmakedefine01 HAVE_MPEG
 
 /* Define to 1 if you have the `floor' function. */
 #cmakedefine01 HAVE_FLOOR
@@ -145,6 +142,10 @@
 /* Define to 1 if the system has the type `ssize_t'. */
 #cmakedefine01 HAVE_SSIZE_T
 
+#if (HAVE_SSIZE_T == 0)
+#define ssize_t intptr_t
+#endif
+
 /* Define to 1 if you have the <stdint.h> header file. */
 #cmakedefine01 HAVE_STDINT_H
 
@@ -172,6 +173,12 @@
 /* Define to 1 if you have the <unistd.h> header file. */
 #cmakedefine01 HAVE_UNISTD_H
 
+/* Define to 1 if you have the <immintrin.h> header file. */
+#cmakedefine01 HAVE_IMMINTRIN_H
+
+/* Define to 1 if you have the <stdbool.h> header file. */
+#cmakedefine01 HAVE_STDBOOL_H
+
 /* Define to 1 if you have the `vsnprintf' function. */
 #cmakedefine01 HAVE_VSNPRINTF
 
@@ -190,29 +197,29 @@
 /* Set to 1 if compiling for Win32 */
 #cmakedefine01 OS_IS_WIN32
 
+/* Set to 1 if SSE2 is enabled */
+#cmakedefine USE_SSE2
+
 /* Name of package */
-#define PACKAGE "@CPACK_PACKAGE_NAME@"
+#define PACKAGE "@PACKAGE_NAME@"
 
 /* Define to the address where bug reports for this package should be sent. */
 #define PACKAGE_BUGREPORT "@PACKAGE_BUGREPORT@"
 
 /* Define to the full name of this package. */
-#define PACKAGE_NAME "@CPACK_PACKAGE_NAME@"
+#define PACKAGE_NAME "@PACKAGE_NAME@"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "@CPACK_PACKAGE_NAME@ @CPACK_PACKAGE_VERSION_FULL@"
+#define PACKAGE_STRING "@PACKAGE_NAME@ @CPACK_PACKAGE_VERSION_FULL@"
 
 /* Define to the one symbol short name of this package. */
-#define PACKAGE_TARNAME "@CPACK_PACKAGE_NAME@"
+#define PACKAGE_TARNAME "@PACKAGE_NAME@"
 
 /* Define to the home page for this package. */
 #define PACKAGE_URL "@PACKAGE_URL@"
 
 /* Define to the version of this package. */
 #define PACKAGE_VERSION "@CPACK_PACKAGE_VERSION_FULL@"
-
-/* Set to maximum allowed value of sf_count_t type. */
-#define SF_COUNT_MAX @SF_COUNT_MAX@
 
 /* The size of `double', as computed by sizeof. */
 @SIZEOF_DOUBLE_CODE@
@@ -241,9 +248,6 @@
 /* The size of `off_t', as computed by sizeof. */
 @SIZEOF_OFF_T_CODE@
 
-/* Set to sizeof (long) if unknown. */
-@SIZEOF_SF_COUNT_T_CODE@
-
 /* The size of `short', as computed by sizeof. */
 @SIZEOF_SHORT_CODE@
 
@@ -258,12 +262,6 @@
 
 /* The size of `wchar_t', as computed by sizeof. */
 @SIZEOF_WCHAR_T_CODE@
-
-/* Define to 1 if you have the ANSI C header files. */
-#cmakedefine01 STDC_HEADERS
-
-/* Set to long if unknown. */
-#define TYPEOF_SF_COUNT_T @TYPEOF_SF_COUNT_T@
 
 /* Enable extensions on AIX 3, Interix.  */
 #ifndef _ALL_SOURCE
@@ -306,9 +304,6 @@
 
 /* Define to 1 if on MINIX. */
 #cmakedefine01 _MINIX
-
-/* Set to 1 to use C99 printf/snprintf in MinGW. */
-#cmakedefine01 __USE_MINGW_ANSI_STDIO
 
 /* Define as `__inline' or '__inline__' if that's what the C compiler calls it, or to nothing if it is not supported. */
 @INLINE_CODE@

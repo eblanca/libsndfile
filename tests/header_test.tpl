@@ -106,7 +106,7 @@ main (int argc, char *argv [])
 		update_seek_int_test ("header_int.aiff", SF_FORMAT_AIFF) ;
 		update_seek_float_test ("header_float.aiff", SF_FORMAT_AIFF) ;
 		update_seek_double_test ("header_double.aiff", SF_FORMAT_AIFF) ;
-		header_shrink_test ("header_shrink.wav", SF_FORMAT_AIFF) ;
+		header_shrink_test ("header_shrink.aiff", SF_FORMAT_AIFF) ;
 		extra_header_test ("extra.aiff", SF_FORMAT_AIFF) ;
 		test_count++ ;
 		} ;
@@ -339,7 +339,7 @@ update_header_before_write_test (const char *filename, int typemajor)
 	SF_INFO		sfinfo ;
 	int			k ;
 
-	print_test_name ("update_header_before_write", filename);
+	print_test_name ("update_header_before_write", filename) ;
 
 	memset (&sfinfo, 0, sizeof (sfinfo)) ;
 	sfinfo.samplerate = 44100 ;
@@ -357,6 +357,7 @@ update_header_before_write_test (const char *filename, int typemajor)
 		data_out [k] = k + 1 ;
 	test_write_int_or_die (outfile, 0, data_out, BUFFER_LEN, __LINE__) ;
 
+	sf_close (outfile) ;
 	unlink (filename) ;
 	puts ("ok") ;
 } /* update_header_before_write_test */

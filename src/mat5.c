@@ -114,7 +114,7 @@ mat5_open	(SF_PRIVATE *psf)
 
 	psf->container_close = mat5_close ;
 
-	psf->blockwidth = psf->bytewidth * psf->sf.channels ;
+	psf->blockwidth = (sf_count_t) psf->bytewidth * psf->sf.channels ;
 
 	switch (subformat)
 	{	case SF_FORMAT_PCM_U8 :
@@ -370,7 +370,7 @@ mat5_read_header (SF_PRIVATE *psf)
 					snprintf (name, sizeof (name), "%f\n", samplerate) ;
 					psf_log_printf (psf, "    Val  : %s\n", name) ;
 
-					psf->sf.samplerate = lrint (samplerate) ;
+					psf->sf.samplerate = psf_lrint (samplerate) ;
 					} ;
 				break ;
 
